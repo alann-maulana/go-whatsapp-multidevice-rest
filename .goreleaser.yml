@@ -16,12 +16,13 @@ builds:
     - 386
     - amd64
 archives:
-- replacements:
-    darwin: macos
-    linux: linux
-    windows: windows
-    386: 32-bit
-    amd64: 64-bit
+- name_template: >-
+    {{ .ProjectName }}_
+    {{- if eq .Os "darwin" }}macos
+    {{- else }}{{ .Os }}{{ end }}_
+    {{- if eq .Arch "amd64" }}64-bit
+    {{- else if eq .Arch "386" }}32-bit
+    {{- else }}{{ .Arch }}{{ end }}
   format: zip
   files:
     - LICENSE
